@@ -28,7 +28,11 @@
 					<th>Birthday</th>
 				</tr>
 
-				<tr ng-repeat="person in persons">
+				<tr ng-repeat="person in persons"
+						ng-style="{
+							'background-color': $index == selectedIndex ? 'lightgray' : ''
+						}"
+						ng-click="selectPerson($index)">
 					<td>{{ $index }}</td>
 					<td>{{ person.name }}</td>
 					<td>{{ person.email }}</td>

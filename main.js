@@ -1,6 +1,11 @@
 const app = angular.module('codecraft', []);
 
 app.controller('PersonsController', ['$scope', function($scope) {
+	$scope.selectedIndex = null;
+
+	$scope.selectPerson = function (index) {
+		$scope.selectedIndex = index;
+	};
 
 	// sample data
 	$scope.persons = [
