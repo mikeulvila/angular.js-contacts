@@ -1,25 +1,33 @@
-const app = angular.module('codecraft', []);
+var app = angular.module('codecraft', []);
 
-app.controller('PersonsController', ['$scope', function($scope) {
+app.controller('PersonDetailController', function ($scope, ContactService) {
+	$scope.contacts = ContactService;
+});
 
-	$scope.search = '';
+app.controller('PersonListController', function ($scope, ContactService) {
+
+	$scope.search = "";
 	$scope.order = "email";
-	$scope.selectedPerson = null;
+	$scope.contacts = ContactService;
 
-	$scope.selectPerson = function (person) {
-		$scope.selectedPerson = person;
-	};
-
-	$scope.sensitiveSearch = function(person) {
+	$scope.sensitiveSearch = function (person) {
 		if ($scope.search) {
 			return person.name.indexOf($scope.search) == 0 ||
-						 person.email.indexOf($scope.search) == 0;
+				person.email.indexOf($scope.search) == 0;
 		}
 		return true;
-	}
+	};
 
-	// sample data
-	$scope.persons = [
+});
+
+app.service('ContactService', function () {
+
+	return {
+		'addPerson': function (person) {
+			this.persons.push(person);
+		},
+		'selectedPerson': null,
+		'persons': [
 			{
 				"name": "Gregory Huffman",
 				"email": "Praesent@pedenec.net",
@@ -922,6 +930,6 @@ app.controller('PersonsController', ['$scope', function($scope) {
 			}
 		]
 
-}]);
+	};
 
-
+});
