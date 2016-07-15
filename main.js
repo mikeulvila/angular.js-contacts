@@ -1,4 +1,11 @@
+
 var app = angular.module('codecraft', ['ngResource']);
+
+app.config(function($httpProvider, $resourceProvider) {
+
+	$httpProvider.defaults.headers.common['Authorization'] = "Token " + api_key;
+	$resourceProvider.defaults.stripTrailingSlashes = false;
+});
 
 app.controller('PersonDetailController', function ($scope, ContactService) {
 	$scope.contacts = ContactService;
