@@ -1,8 +1,10 @@
 
-var app = angular.module('codecraft', ['ngResource']);
+var app = angular.module('codecraft', [
+	'ngResource',
+	'infinite-scroll'
+]);
 
 app.config(function($httpProvider, $resourceProvider) {
-
 	$httpProvider.defaults.headers.common['Authorization'] = "Token " + api_key;
 	$resourceProvider.defaults.stripTrailingSlashes = false;
 });
@@ -23,6 +25,10 @@ app.controller('PersonListController', function ($scope, ContactService) {
 	$scope.order = "email";
 	$scope.contacts = ContactService;
 
+	$scope.loadMore = function () {
+		 $scope.contacts.loadMore();
+	};
+
 	$scope.sensitiveSearch = function (person) {
 		if ($scope.search) {
 			return person.name.indexOf($scope.search) == 0 ||
@@ -37,7 +43,7 @@ app.service('ContactService', ['Contact', function (Contact) {
 
 
 
-	const self = {
+	var self = {
 		'addPerson': function (person) {
 			this.persons.push(person);
 		},
@@ -47,12 +53,32 @@ app.service('ContactService', ['Contact', function (Contact) {
 		'selectedPerson': null,
 		'persons': [],
 		'loadContacts': function () {
-			Contact.get(function (data) {
-				console.log(data);
-				angular.forEach(data.results, function(person) {
-					self.persons.push(new Contact(person));
+			if (self.hasMore && !self.isLoading) {
+				self.isLoading = true;
+
+				var params = {
+					'page': self.page
+				};
+
+				Contact.get(params, function (data) {
+					console.log(data);
+					angular.forEach(data.results, function(person) {
+						self.persons.push(new Contact(person));
+					});
+
+					if (!data.next) {
+						self.hasMore = false;
+					}
+					self.isLoading = false;
+
 				});
-			});
+			}
+		},
+		'loadMore': function () {
+			 if (self.hasMore && !self.isLoading) {
+			 	self.page += 1;
+			 	self.loadContacts();
+			 }
 		}
 
 	};
