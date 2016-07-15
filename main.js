@@ -1,4 +1,4 @@
-var app = angular.module('codecraft', []);
+var app = angular.module('codecraft', ['ngResource']);
 
 app.controller('PersonDetailController', function ($scope, ContactService) {
 	$scope.contacts = ContactService;
