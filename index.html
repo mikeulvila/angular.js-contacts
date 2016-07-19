@@ -109,7 +109,12 @@
 		     ng-controller="PersonDetailController" >
 
 			<div class="panel panel-default" >
-				<div class="panel-heading" >Details</div >
+				<div class="panel-heading" >Details
+					<button class="btn btn-danger btn-sm pull-right"
+									ladda="isDeleting"
+									ng-click="remove()"> Delete
+					</button>
+				</div >
 				<div class="panel-body" >
 
 					<form ng-submit='save()'>
