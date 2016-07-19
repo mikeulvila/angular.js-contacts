@@ -5,14 +5,20 @@ var app = angular.module('codecraft', [
 	'angularSpinner',
 	'jcs-autoValidate',
 	'angular-ladda',
-	'mgcrea.ngStrap'
+	'mgcrea.ngStrap',
+	'toaster',
+	'ngAnimate'
 ]);
 
-app.config(function($httpProvider, $resourceProvider, laddaProvider) {
+app.config(function($httpProvider, $resourceProvider, laddaProvider, $datepickerProvider) {
 	$httpProvider.defaults.headers.common['Authorization'] = "Token " + api_key;
 	$resourceProvider.defaults.stripTrailingSlashes = false;
 	laddaProvider.setOption({
 		style: 'expand-right'
+	});
+	angular.extend($datepickerProvider.defaults, {
+		dateFormat: 'd/M/yyyy',
+		autoclose: true
 	});
 });
 
@@ -81,7 +87,7 @@ app.controller('PersonListController', function ($scope, $modal, ContactService)
 
 });
 
-app.service('ContactService', ['Contact', '$q', function (Contact, $q) {
+app.service('ContactService', ['Contact', '$q', 'toaster', function (Contact, $q, toaster) {
 
 
 
@@ -146,6 +152,7 @@ app.service('ContactService', ['Contact', '$q', function (Contact, $q) {
 			self.isSaving = true;
 			person.$update().then(function() {
 				self.isSaving = false;
+				toaster.pop('success', 'Updated ' + person.name);
 			});
 		},
 		'removeContact': function (person) {
@@ -155,6 +162,7 @@ app.service('ContactService', ['Contact', '$q', function (Contact, $q) {
 				var index = self.persons.indexOf(person);
 				self.persons.splice(index, 1);
 				self.selectedPerson = null;
+				toaster.pop('success', 'Deleted ' + person.name);
 			});
 		},
 		'createContact': function (person) {
@@ -167,6 +175,7 @@ app.service('ContactService', ['Contact', '$q', function (Contact, $q) {
 				self.page = 1;
 				self.persons = [];
 				self.loadContacts();
+				toaster.pop('success', 'Created ' + person.name);
 				d.resolve();
 			});
 			return d.promise;

@@ -22,6 +22,8 @@
     "angular-spinner": "^0.8.1",
     "angular-auto-validate": "^1.19.6",
     "angular-ladda": "^0.4.1",
-    "angular-strap": "^2.3.9"
+    "angular-strap": "^2.3.9",
+    "bootstrap-additions": "^0.3.1",
+    "AngularJS-Toaster": "angularjs-toaster#^2.0.0"
   }
 }
