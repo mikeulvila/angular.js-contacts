@@ -17,6 +17,19 @@ body {
   margin-top: 20px;
 }
 
+.table .col-1 {
+  width: 10%;
+}
+.table .col-2 {
+  width: 30%;
+}
+.table .col-3 {
+  width: 30%;
+}
+.table .col-4 {
+  width: 30%;
+}
+
 .table tr td {
   vertical-align: middle;
 }
@@ -41,4 +54,27 @@ body {
 }
 .modal-backdrop.am-fade.ng-leave.ng-leave-active {
   opacity: 0;
+}
+
+.sortables {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+.sortables span:first-child {
+  position: absolute;
+  top: 0;
+}
+.sortables span:last-child {
+  position: absolute;
+  bottom: 0;
+}
+.sortables span {
+  color: lightgray;
+  font-size: 18px;
+}
+.sortables span:hover {
+  color: #002a80;
 }
