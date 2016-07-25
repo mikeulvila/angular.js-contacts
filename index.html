@@ -7,12 +7,12 @@
 				rel="stylesheet" >
 	<link href="paper.min.css"
 				rel="stylesheet" >
-	<link href="/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css"
-				rel="stylesheet" >
 	<link href="/bower_components/AngularJS-Toaster/toaster.min.css"
 				rel="stylesheet" >
 	<link href="/bower_components/ladda/dist/ladda-themeless.min.css"
 	      rel="stylesheet" >
+  <link href="/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css"
+	rel="stylesheet" >
 	<link href="./bower_components/font-awesome/css/font-awesome.min.css"
 	      rel="stylesheet" >
 	<link href="main.css"
@@ -103,7 +103,7 @@
 						}"
 						    ng-click="contacts.selectedPerson = person" >
 							<td >
-								<img ng-src="{{ person.photo }}"
+								<img ng-src="{{ person.photo | defaultImage }}"
 										 class="img-circle profile-photo">
 							</td >
 							<td >{{ person.name }}</td >

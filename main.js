@@ -34,6 +34,17 @@ app.factory("Contact", function($resource) {
 		);
 });
 
+app.filter('defaultImage', function() {
+
+	return function (input, param) {
+		if (!input) {
+			return './avatar.png'
+		}
+		return input;
+	};
+
+});
+
 app.controller('PersonDetailController', function ($scope, ContactService) {
 	$scope.contacts = ContactService;
 
