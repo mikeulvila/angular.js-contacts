@@ -103,7 +103,7 @@
 						}"
 						    ng-click="contacts.selectedPerson = person" >
 							<td >
-								<img ng-src="{{ person.photo | defaultImage }}"
+								<img ng-src="{{ person.photo | defaultImage:'./avatar.png' }}"
 										 class="img-circle profile-photo">
 							</td >
 							<td >{{ person.name }}</td >

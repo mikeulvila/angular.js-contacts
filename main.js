@@ -38,7 +38,7 @@ app.filter('defaultImage', function() {
 
 	return function (input, param) {
 		if (!input) {
-			return './avatar.png'
+			return param;
 		}
 		return input;
 	};
