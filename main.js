@@ -88,7 +88,7 @@ app.directive('ccCard', function () {
 	 	'restrict': 'AE',
 	 	'templateUrl': 'templates/card.html',
 	 	'scope': {
-
+	 		'user': '='
 	 	}
 	 }
 });
