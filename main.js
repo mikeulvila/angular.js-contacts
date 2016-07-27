@@ -84,6 +84,7 @@ app.filter('defaultImage', function() {
 });
 
 app.controller('PersonDetailController', function ($scope, $stateParams, $state, ContactService) {
+	$scope.mode = "Edit";
 
 	$scope.contacts = ContactService;
 
@@ -100,6 +101,21 @@ app.controller('PersonDetailController', function ($scope, $stateParams, $state,
 			$state.go("list");
 		});
 	}
+
+});
+
+app.controller('PersonCreateController', function ($scope, $state, ContactService) {
+	$scope.mode = "Create";
+
+	$scope.contacts = ContactService;
+
+	$scope.save = function () {
+		console.log("createContact");
+		$scope.contacts.createContact($scope.contacts.selectedPerson)
+			.then(function () {
+				$state.go("list");
+			});
+	};
 
 });
 
