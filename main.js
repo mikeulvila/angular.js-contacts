@@ -83,7 +83,10 @@ app.filter('defaultImage', function() {
 
 });
 
-app.controller('PersonDetailController', function ($scope, ContactService) {
+app.controller('PersonDetailController', function ($scope, $stateParams, ContactService) {
+
+	$scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.email);
+
 	$scope.contacts = ContactService;
 
 	$scope.save = function() {
@@ -141,8 +144,14 @@ app.service('ContactService', ['Contact', '$q', 'toaster', function (Contact, $q
 
 
 	var self = {
-		'addPerson': function (person) {
-			this.persons.push(person);
+		'getPerson': function (email) {
+			console.log(email);
+			for (var i = 0; i < self.persons.length; i++) {
+				var obj = self.persons[i];
+				if (obj.email == email) {
+					return obj;
+				}
+			}
 		},
 		'page': 1,
 		'hasMore': true,
