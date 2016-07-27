@@ -81,7 +81,17 @@ app.directive('ccSpinner', function () {
 	 		'message': '@'
 	 	}
 	 }
-})
+});
+
+app.directive('ccCard', function () {
+	 return {
+	 	'restrict': 'AE',
+	 	'templateUrl': 'templates/card.html',
+	 	'scope': {
+
+	 	}
+	 }
+});
 
 app.filter('defaultImage', function() {
 
