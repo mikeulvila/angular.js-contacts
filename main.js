@@ -88,7 +88,8 @@ app.directive('ccCard', function () {
 	 	'restrict': 'AE',
 	 	'templateUrl': 'templates/card.html',
 	 	'scope': {
-	 		'user': '='
+	 		'user': '=',
+	 		'deleteUser': '&'
 	 	}
 	 }
 });
@@ -148,6 +149,10 @@ app.controller('PersonListController', function ($scope, $modal, ContactService)
 
 	$scope.loadMore = function () {
 		 $scope.contacts.loadMore();
+	};
+
+	$scope.parentDeleteUser = function (user) {
+		$scope.contacts.removeContact(user);
 	};
 
 	$scope.showCreateModal = function () {
