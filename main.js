@@ -83,18 +83,22 @@ app.filter('defaultImage', function() {
 
 });
 
-app.controller('PersonDetailController', function ($scope, $stateParams, ContactService) {
-
-	$scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.email);
+app.controller('PersonDetailController', function ($scope, $stateParams, $state, ContactService) {
 
 	$scope.contacts = ContactService;
 
+	$scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.email);
+
 	$scope.save = function() {
-		$scope.contacts.updateContact($scope.contacts.selectedPerson);
+		$scope.contacts.updateContact($scope.contacts.selectedPerson).then(function () {
+			$state.go("list");
+		});
 	}
 
 	$scope.remove = function() {
-		$scope.contacts.removeContact($scope.contacts.selectedPerson);
+		$scope.contacts.removeContact($scope.contacts.selectedPerson).then(function () {
+			$state.go("list");
+		});
 	}
 
 });
@@ -207,13 +211,17 @@ app.service('ContactService', ['Contact', '$q', 'toaster', function (Contact, $q
 			 }
 		},
 		'updateContact': function (person) {
+			var d = $q.defer();
 			self.isSaving = true;
 			person.$update().then(function() {
 				self.isSaving = false;
 				toaster.pop('success', 'Updated ' + person.name);
+				d.resolve();
 			});
+			return d.promise;
 		},
 		'removeContact': function (person) {
+			var d = $q.defer();
 			self.isDeleting = true;
 			person.$remove().then(function() {
 				self.isDeleting = false;
@@ -221,7 +229,9 @@ app.service('ContactService', ['Contact', '$q', 'toaster', function (Contact, $q
 				self.persons.splice(index, 1);
 				self.selectedPerson = null;
 				toaster.pop('success', 'Deleted ' + person.name);
+				d.resolve();
 			});
+			return d.promise;
 		},
 		'createContact': function (person) {
 			var d = $q.defer();
